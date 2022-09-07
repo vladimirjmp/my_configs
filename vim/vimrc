@@ -1,0 +1,117 @@
+set nocompatible		" Disable compatibility with vi which can cause unexpected issues.
+set shell=sh
+filetype on					" Enable type file detection. Vim will be able to try to detect the type of file in use.
+filetype plugin on	" Enable plugins and load plugin for the detected file type.
+filetype indent on	" Load an indent file for the detected file type.
+
+set number					" Add numbers to each line on the left-hand side.
+set mouse=a
+set numberwidth=1
+set clipboard=unnamed
+syntax on						" Turn syntax highlighting on.
+set encoding=utf-8
+set relativenumber
+set title
+set cursorline			" Highlight cursor line underneath the cursor horizontally.
+set ruler
+set smartcase				" Override the ignorecase option if searching for capital letters.
+set nobackup				" Do not save backup files.
+set showcmd					" Show partial command you type in the last line of the screen.
+set showmode				" Show the mode you are on the last line.
+set laststatus=2		" Show the status on the second to last line
+
+" Serarching
+set hlsearch				" Use highlighting when doing a search
+set incsearch				" While searching though a file incrementally highlight matching characters as you type.
+set ignorecase			" Ignore capital letters during search.
+set showmatch				" Show matching words during a search
+
+" Window splitting
+set splitbelow
+set splitright
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+nnoremap <space> za
+
+" vim plugins
+call plug#begin('~/.vim/plugged')
+
+" Sintax
+Plug 'sheerun/vim-polyglot'
+
+" Status bar
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Tree
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" Themes
+Plug 'morhetz/gruvbox'
+Plug 'shinchu/lightline-gruvbox.vim'
+
+" Typing
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+
+" IDE
+Plug 'Yggdroot/indentLine'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug '907th/vim-auto-save'
+Plug 'tpope/vim-commentary'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'mhinz/vim-startify'
+
+call plug#end()
+
+" Theme
+set termguicolors
+"let g:solarized_termtrans = 1
+"let g:solarized_extra_hi_groups = 1
+colorscheme gruvbox
+set background=dark
+highlight Normal ctermbg=NONE
+
+" Status Bar
+let g:airline_theme='base16_gruvbox_dark_medium'
+let g:airline_powerline_fonts = 1
+"let g:airline_extensions = ['ale']
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+
+" Tree
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+let NERDTreeShowHidden = 1
+let g:NERDTreeGitStatusUseNerdFonts = 1
+
+" Terminal
+nnoremap <C-ñ> :term<CR>
+
+" IDE
+let g:auto_save = 0
+let g:auto_save_silent = 1
+let g:auto_save_events = ["InsertLeave", "TextChanged", "TextChangedI"]
+let g:indentLine_setColors = 0
+so ~/.vim/plugins/coc-config.vim
+
+" Python customizations
+augroup ft_python
+  au!
+  au FileType python let b:auto_save = 1
+augroup END
+
+au BufNewFile,BufRead *.py
+	\ set colorcolumn=80  " Highlight column
